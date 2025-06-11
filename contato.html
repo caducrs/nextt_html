@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contato - Nextt</title>
+    <meta name="description" content="Entre em contato com a Nextt para solicitar orçamentos, tirar dúvidas ou iniciar seu projeto digital. Estamos prontos para transformar suas ideias em resultados.">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="site-header">
+        <div class="container header-container">
+            <div class="site-logo">
+                <a href="index.html"><img src="images/logo.png" alt="Nextt"></a>
+            </div>
+            
+            <button class="mobile-menu-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+            
+            <nav class="main-navigation">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="sobre.html">Sobre</a></li>
+                    <li><a href="servicos.html">Serviços</a></li>
+                    <li><a href="portfolio.html">Portfólio</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="contato.html" class="active">Contato</a></li>
+                </ul>
+            </nav>
+            
+            <div class="header-cta">
+                <a href="contato.html" class="btn">Orçamento</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container page-header-content">
+            <h1 class="page-title">Entre em Contato</h1>
+            <div class="breadcrumbs">
+                <a href="index.html">Home</a> / Contato
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h3>Informações de Contato</h3>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div class="contact-text">
+                                <h4>Endereço</h4>
+                                <p>Av. Paulista, 1000, São Paulo - SP</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <i class="fas fa-phone-alt"></i>
+                            <div class="contact-text">
+                                <h4>Telefone</h4>
+                                <p>(11) 9999-9999</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <div class="contact-text">
+                                <h4>Email</h4>
+                                <p>contato@nextt.com.br</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <i class="fas fa-clock"></i>
+                            <div class="contact-text">
+                                <h4>Horário de Funcionamento</h4>
+                                <p>Segunda a Sexta, 9h às 18h</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-social">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <h3>Envie uma Mensagem</h3>
+                    <form id="contactForm" action="#" method="post">
+                        <div class="form-group">
+                            <label for="name">Nome*</label>
+                            <input type="text" id="name" name="name" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email*</label>
+                            <input type="email" id="email" name="email" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Telefone</label>
+                            <input type="tel" id="phone" name="phone" class="form-control">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="company">Empresa</label>
+                            <input type="text" id="company" name="company" class="form-control">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="service">Serviço de Interesse</label>
+                            <select id="service" name="service" class="form-control">
+                                <option value="">Selecione um serviço</option>
+                                <option value="desenvolvimento-web">Desenvolvimento Web</option>
+                                <option value="marketing-digital">Marketing Digital</option>
+                                <option value="design-branding">Design & Branding</option>
+                                <option value="consultoria-digital">Consultoria Digital</option>
+                                <option value="outro">Outro</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Mensagem*</label>
+                            <textarea id="message" name="message" class="form-control" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn">Enviar Mensagem</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Section -->
+    <section class="map-section">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3657.0976951333906!2d-46.65390548502164!3d-23.564611184683726!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce59c8da0aa315%3A0xd59f9431f2c9776a!2sAv.%20Paulista%2C%20S%C3%A3o%20Paulo%20-%20SP!5e0!3m2!1spt-BR!2sbr!4v1623252424889!5m2!1spt-BR!2sbr" allowfullscreen="" loading="lazy"></iframe>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <h2 class="section-title">Perguntas Frequentes</h2>
+            
+            <div class="faq-item">
+                <h3>Quanto tempo leva para desenvolver um site?</h3>
+                <p>Depende da complexidade do projeto. Um site institucional simples pode levar de 2 a 4 semanas, enquanto projetos mais complexos como e-commerces podem levar de 8 a 12 semanas.</p>
+            </div>
+            
+            <div class="faq-item">
+                <h3>Vocês oferecem suporte após a entrega do projeto?</h3>
+                <p>Sim, oferecemos planos de suporte e manutenção contínuos para garantir que seu site ou aplicação esteja sempre atualizado e funcionando perfeitamente.</p>
+            </div>
+            
+            <div class="faq-item">
+                <h3>Como funciona o processo de desenvolvimento?</h3>
+                <p>Nosso processo inclui: Briefing e levantamento de requisitos, Planejamento, Design, Desenvolvimento, Testes, Lançamento e Suporte pós-lançamento.</p>
+            </div>
+            
+            <div class="faq-item">
+                <h3>Quais métodos de pagamento vocês aceitam?</h3>
+                <p>Aceitamos pagamentos via transferência bancária, boleto e cartão de crédito (parcelamento em até 12x).</p>
+            </div>
+            
+            <div class="faq-item">
+                <h3>Vocês desenvolvem aplicativos móveis?</h3>
+                <p>Sim, desenvolvemos aplicativos para iOS e Android, além de soluções web responsivas que funcionam em qualquer dispositivo.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-widget">
+                    <h3>Sobre a Nextt</h3>
+                    <p>Somos uma agência digital especializada em transformar a presença online de empresas através de estratégias personalizadas e soluções tecnológicas inovadoras.</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-widget">
+                    <h3>Links Rápidos</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="sobre.html">Sobre Nós</a></li>
+                        <li><a href="servicos.html">Serviços</a></li>
+                        <li><a href="portfolio.html">Portfólio</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="contato.html">Contato</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-widget">
+                    <h3>Serviços</h3>
+                    <ul class="footer-links">
+                        <li><a href="servicos.html#desenvolvimento-web">Desenvolvimento Web</a></li>
+                        <li><a href="servicos.html#marketing-digital">Marketing Digital</a></li>
+                        <li><a href="servicos.html#design-branding">Design & Branding</a></li>
+                        <li><a href="servicos.html#consultoria-digital">Consultoria Digital</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-widget">
+                    <h3>Contato</h3>
+                    <ul class="footer-contact">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Av. Paulista, 1000, São Paulo - SP</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone-alt"></i>
+                            <span>(11) 9999-9999</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span>contato@nextt.com.br</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-clock"></i>
+                            <span>Segunda a Sexta, 9h às 18h</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Nextt. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <!-- Main JS -->
+    <script src="js/main.js"></script>
+</body>
+</html>
