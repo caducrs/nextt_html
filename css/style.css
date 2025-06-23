@@ -5,11 +5,11 @@ Versão: 1.0
 
 /* Variáveis de cores */
 :root {
-    --primary-color: #E50914;
-    --secondary-color: #121212;
-    --dark-gray: #333333;
+    --primary-color: #E5F33C;
+    --secondary-color: #151606;
+    --dark-gray: #465462;
     --light-gray: #f5f5f5;
-    --white: #ffffff;
+    --white: #FFFFFF;
     --transition: all 0.3s ease;
 }
 
@@ -62,7 +62,7 @@ a:hover {
 }
 
 img {
-    max-width: 100%;
+    max-width: 50%;
     height: auto;
 }
 
@@ -195,7 +195,7 @@ img {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(45deg, rgba(229, 9, 20, 0.8), rgba(18, 18, 18, 0.8));
+    background: linear-gradient(45deg, #E5F33C, rgba(18, 18, 18, 0.8));
     z-index: 1;
 }
 
