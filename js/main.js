@@ -179,11 +179,11 @@ document.addEventListener("DOMContentLoaded", function () {
   window.addEventListener("scroll", animateOnScroll);
   window.addEventListener("load", animateOnScroll);
 });
-
+// --------- Função de visibilidade do header ---------------
 function updateHeaderVisibility() {
   const nav = document.getElementById("mainNav");
   const heroSection = document.getElementById("hero");
-
+//Pra evitar contéudo que não pertença a hero e a nav
   if (!nav || !heroSection) return;
 
   const heroTop = heroSection.getBoundingClientRect().top;
@@ -194,7 +194,7 @@ function updateHeaderVisibility() {
     nav.classList.remove("hidden");
   }
 }
-
+//Normalmente isso aqui é legal de se fazer
 window.addEventListener("load", () => {
   const nav = document.getElementById("mainNav");
   nav.classList.add("no-transition");
