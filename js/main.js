@@ -205,3 +205,27 @@ window.addEventListener("load", () => {
 });
 
 window.addEventListener("scroll", updateHeaderVisibility);
+
+document.querySelectorAll('.faq-item h3').forEach(header => {
+  header.addEventListener('click', () => {
+    const item = header.parentElement;
+    item.classList.toggle('open');
+    header.classList.toggle('active');
+  });
+});
+
+function onScrollFadeIn() {
+  const elements = document.querySelectorAll('body *');
+
+  elements.forEach(el => {
+    const rect = el.getBoundingClientRect();
+    const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+
+    if (rect.top <= windowHeight * 0.9) {
+      el.classList.add('_visible');
+    }
+  });
+}
+
+window.addEventListener('scroll', onScrollFadeIn);
+window.addEventListener('load', onScrollFadeIn);

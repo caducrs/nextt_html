@@ -12,7 +12,17 @@ Versão: 1.0
   --white: #ffffff;
   --transition: all 0.3s ease;
 }
+body * {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+  will-change: opacity, transform;
+}
 
+body *._visible {
+  opacity: 1;
+  transform: translateY(0);
+}
 /* Reset e estilos base */
 * {
   margin: 0;
@@ -69,6 +79,7 @@ a:hover {
 img {
   max-width: 50%;
   height: auto;
+
 }
 
 .container {
@@ -81,12 +92,15 @@ img {
 .btn {
   display: inline-block;
   padding: 12px 30px;
-  background-color: var(--primary-color);
-  color: var(--white);
+  background-color: #ffff00;
+  color: black;
+
   border: none;
   border-radius: 4px;
-  font-family: "Montserrat", sans-serif;
-  font-weight: 600;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-style: italic;
+  font-size: large;
+  font-weight: bolder;
   text-transform: uppercase;
   cursor: pointer;
   transition: var(--transition);
@@ -94,18 +108,18 @@ img {
 
 .btn:hover {
   background-color: var(--secondary-color);
-  color: var(--white);
+  color: #ffff00;
 }
 
 .btn-outline {
-  background-color: transparent;
-  border: 2px solid var(--primary-color);
-  color: var(--primary-color);
+  background-color: var(--secondary-color);
+  color: #ffff00 ;
 }
 
+
 .btn-outline:hover {
-  background-color: var(--primary-color);
-  color: var(--white);
+  background-color: #68727d;
+  color: #ffff00;
 }
 
 /* Header */
@@ -120,14 +134,18 @@ img {
 
 }
 
+
 .header-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: center; 
+  align-items: center; 
+  padding-right: 150px;
+  height: 10vh;
 }
 
 .site-logo {
   max-width: 150px;
+ 
 }
 
 .site-logo a {
@@ -206,10 +224,17 @@ img {
 .hero-section {
   background-color: var(--secondary-color);
   color: var(--white);
-  padding: 150px 0 100px;
+  min-height: 110vh;
   position: relative;
   overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
+
 
 .hero-section::after {
   content: "";
@@ -220,7 +245,9 @@ img {
   height: 100%;
   background: linear-gradient(45deg, #e5f33c, rgba(18, 18, 18, 0.8));
   z-index: 1;
+  pointer-events: none;
 }
+
 
 .hero-content {
   position: relative;
@@ -228,19 +255,38 @@ img {
   max-width: 800px;
   margin: 0 auto;
   text-align: center;
+
+  opacity: 0;
+  transform: translateY(40px);
+  animation: fadeInUp 1.3s ease-out forwards;
+}
+
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .hero-title {
   font-size: 3.5rem;
   margin-bottom: 20px;
-  color: var(--white);
+  font-weight: bold;
+  color: #ffff00;
 }
 
 .hero-subtitle {
   font-size: 1.5rem;
   margin-bottom: 40px;
-  color: var(--white);
+  color: #ffffff;
   opacity: 0.9;
+  font-weight: bolder;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .hero-buttons {
@@ -249,7 +295,8 @@ img {
   gap: 20px;
 }
 
-/* Intro Section */
+
+
 .intro-section {
   padding: 100px 0;
   text-align: center;
@@ -272,7 +319,7 @@ img {
   background-color: var(--primary-color);
 }
 
-/* Services Section */
+
 .services-section {
   padding: 100px 0;
   background-color: var(--light-gray);
@@ -390,24 +437,27 @@ img {
 /* CTA Section */
 .cta-section {
   padding: 80px 0;
-  background-color: var(--primary-color);
-  color: var(--white);
+  background-color:var(--secondary-color);
+  color: var(--primary-color);
   text-align: center;
 }
 
 .cta-section h2 {
-  color: var(--white);
+  color: var(--primary-color);
   margin-bottom: 30px;
 }
 
 .cta-section .btn {
-  background-color: var(--white);
-  color: var(--primary-color);
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  font-weight: bolder;
+  font-size: larger;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 .cta-section .btn:hover {
-  background-color: var(--secondary-color);
-  color: var(--white);
+  background-color: #919100;
+  color: var(--secondary-color);
 }
 
 /* Clients Section */
@@ -600,7 +650,7 @@ img {
 
 /* Page Header */
 .page-header {
-  background-color: var(--secondary-color);
+
   color: var(--white);
   padding: 150px 0 80px;
   text-align: center;
@@ -614,11 +664,7 @@ img {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    45deg,
-    rgba(229, 9, 20, 0.8),
-    rgba(18, 18, 18, 0.8)
-  );
+ background-color: var();
   z-index: 1;
 }
 
@@ -630,16 +676,18 @@ img {
 .page-title {
   font-size: 3rem;
   margin-bottom: 20px;
-  color: var(--white);
+  color: var(--secondary-color);
 }
 
 .breadcrumbs {
-  color: var(--white);
+  color: var(--secondary-color);
   opacity: 0.8;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: bolder;
 }
 
 .breadcrumbs a {
-  color: var(--white);
+  color: var(--secondary-color);
 }
 
 .breadcrumbs a:hover {
@@ -1033,6 +1081,7 @@ textarea.form-control {
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   overflow: hidden;
+  transition: box-shadow 0.3s ease;
 }
 
 .faq-item h3 {
@@ -1041,6 +1090,7 @@ textarea.form-control {
   font-size: 1.2rem;
   cursor: pointer;
   position: relative;
+  transition: color 0.3s ease;
 }
 
 .faq-item h3::after {
@@ -1049,7 +1099,7 @@ textarea.form-control {
   font-weight: 900;
   position: absolute;
   right: 20px;
-  transition: var(--transition);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .faq-item h3.active::after {
@@ -1057,9 +1107,24 @@ textarea.form-control {
 }
 
 .faq-item p {
-  padding: 0 20px 20px;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  padding: 0 20px;
   margin: 0;
-  display: none;
+  transform: translateY(-10px);
+  transition:
+    max-height 0.6s ease,
+    opacity 0.6s ease,
+    transform 0.6s ease,
+    padding 0.3s ease;
+}
+
+.faq-item.open p {
+  max-height: 300px; 
+  opacity: 1;
+  transform: translateY(0);
+  padding-bottom: 20px;
 }
 
 /* Blog Page */
