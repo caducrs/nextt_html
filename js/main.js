@@ -180,52 +180,164 @@ document.addEventListener("DOMContentLoaded", function () {
   window.addEventListener("load", animateOnScroll);
 });
 // --------- Função de visibilidade do header ---------------
-function updateHeaderVisibility() {
-  const nav = document.getElementById("mainNav");
+document.addEventListener("DOMContentLoaded", () => {
+  const main = document.querySelector("main");
+  const header = document.getElementById("mainNav");
   const heroSection = document.getElementById("hero");
-//Pra evitar contéudo que não pertença a hero e a nav
-  if (!nav || !heroSection) return;
+  const sobreSection = document.getElementById("sobre");
 
-  const heroTop = heroSection.getBoundingClientRect().top;
+  function toggleHeader() {
+  
+    const sobreTop = sobreSection.getBoundingClientRect().top;
+    const mainTop = main.getBoundingClientRect().top;
 
-  if (heroTop <= 0) {
-    nav.classList.add("hidden");
-  } else {
-    nav.classList.remove("hidden");
-  }
-}
-//Normalmente isso aqui é legal de se fazer
-window.addEventListener("load", () => {
-  const nav = document.getElementById("mainNav");
-  nav.classList.add("no-transition");
-  updateHeaderVisibility();
-  requestAnimationFrame(() => {
-    nav.classList.remove("no-transition");
-  });
-});
+  
+    const relativeSobreTop = sobreTop - mainTop;
 
-window.addEventListener("scroll", updateHeaderVisibility);
-
-document.querySelectorAll('.faq-item h3').forEach(header => {
-  header.addEventListener('click', () => {
-    const item = header.parentElement;
-    item.classList.toggle('open');
-    header.classList.toggle('active');
-  });
-});
-
-function onScrollFadeIn() {
-  const elements = document.querySelectorAll('body *');
-
-  elements.forEach(el => {
-    const rect = el.getBoundingClientRect();
-    const windowHeight = window.innerHeight || document.documentElement.clientHeight;
-
-    if (rect.top <= windowHeight * 0.9) {
-      el.classList.add('_visible');
+  
+    if (relativeSobreTop > 0) {
+      header.classList.add("hidden");
+    } else {
+      header.classList.remove("hidden");
     }
-  });
-}
+  }
 
-window.addEventListener('scroll', onScrollFadeIn);
-window.addEventListener('load', onScrollFadeIn);
+
+  toggleHeader();
+
+
+  main.addEventListener("scroll", toggleHeader);
+});
+
+
+// SCROLL DA PAGINA -------------------------------------
+document.addEventListener("DOMContentLoaded", () => {
+  const main = document.querySelector("main");
+  const header = document.getElementById("mainNav");
+  const firstSection = document.querySelector(".page.hero-section");
+
+  function toggleNavbar() {
+    const scrollTop = main.scrollTop;
+    if (firstSection) {
+      const limit = firstSection.offsetHeight / 2;
+      if (scrollTop < limit) {
+        header.classList.remove("hidden");
+      } else {
+        header.classList.add("hidden");
+      }
+    } else {
+      header.classList.remove("hidden");
+    }
+  }
+
+  toggleNavbar();
+  main.addEventListener("scroll", toggleNavbar);
+
+  const observerOptions = {
+    root: main,
+    rootMargin: "0px",
+    threshold: 0.5,
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("_visible");
+      }
+    });
+  }, observerOptions);
+
+  const sections = document.querySelectorAll(".page");
+  sections.forEach((section) => observer.observe(section));
+
+
+  const isDesktop = !/Mobi|Android/i.test(navigator.userAgent);
+
+  if (isDesktop) {
+    let isScrolling = false;
+
+    main.addEventListener('wheel', (e) => {
+      e.preventDefault();
+
+      if (isScrolling) return; 
+      isScrolling = true;
+
+      const delta = e.deltaY;
+
+    
+      const getRelativeTop = (element) => {
+        return element.getBoundingClientRect().top - main.getBoundingClientRect().top + main.scrollTop;
+      };
+
+      if (delta > 0) {
+      
+        const next = [...sections].find(section => getRelativeTop(section) > main.scrollTop + 10);
+        if (next) {
+          next.scrollIntoView({behavior: 'smooth'});
+        } else {
+          isScrolling = false;
+        }
+      } else {
+        
+        const prevSections = [...sections].filter(section => getRelativeTop(section) < main.scrollTop - 10);
+        if (prevSections.length) {
+          const prev = prevSections[prevSections.length - 1];
+          prev.scrollIntoView({behavior: 'smooth'});
+        } else {
+          isScrolling = false; 
+        }
+      }
+
+   
+      setTimeout(() => {
+        isScrolling = false;
+      }, 700);
+    }, {passive: false});
+  }
+});
+// COUNTER DO STAST -------------------------------------------- //
+const counters = document.querySelectorAll('.count-up');
+  let hasCounted = false;
+
+  const animateCount = (el, target) => {
+    let start = 0;
+    const duration = 9000; 
+    const increment = Math.ceil(target / (duration / 16)); // ~60fps
+
+    const updateCount = () => {
+      start += increment;
+      if (start >= target) {
+        el.textContent = target;
+      } else {
+        el.textContent = start;
+        requestAnimationFrame(updateCount);
+      }
+    };
+
+    updateCount();
+  };
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !hasCounted) {
+        hasCounted = true;
+
+        counters.forEach(counter => {
+          const span = counter.querySelector('span');
+          const target = parseInt(counter.dataset.target, 10);
+          animateCount(span, target);
+        });
+
+        observer.disconnect(); 
+      }
+    });
+  }, {
+    threshold: 0.6
+  });
+
+  const statsSection = document.querySelector('.stats-section');
+  if (statsSection) {
+    observer.observe(statsSection);
+  }
+
+
