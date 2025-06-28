@@ -46,21 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // Initialize testimonials slider if exists and Slick is loaded
-  const testimonialsSlider = document.querySelector(".testimonials-slider");
-  if (testimonialsSlider && typeof $.fn.slick !== "undefined") {
-    $(".testimonials-slider").slick({
-      dots: true,
-      arrows: false,
-      infinite: true,
-      speed: 500,
-      slidesToShow: 1,
-      slidesToScroll: 1,
-      autoplay: true,
-      autoplaySpeed: 5000,
-      adaptiveHeight: true,
-    });
-  }
+
 
   // Initialize portfolio filters if exists and Isotope is loaded
   const portfolioGrid = document.querySelector(".portfolio-grid");
@@ -146,21 +132,8 @@ document.addEventListener("DOMContentLoaded", function () {
     return pattern.test(email);
   }
 
-  // FAQ accordion
-  const faqItems = document.querySelectorAll(".faq-item h3");
-  if (faqItems) {
-    faqItems.forEach((item) => {
-      item.addEventListener("click", function () {
-        this.classList.toggle("active");
-        const content = this.nextElementSibling;
-        if (content.style.display === "block") {
-          content.style.display = "none";
-        } else {
-          content.style.display = "block";
-        }
-      });
-    });
-  }
+
+
 
   // Animation on scroll
   function animateOnScroll() {
@@ -179,122 +152,92 @@ document.addEventListener("DOMContentLoaded", function () {
   window.addEventListener("scroll", animateOnScroll);
   window.addEventListener("load", animateOnScroll);
 });
+
+
 // --------- Função de visibilidade do header ---------------
 document.addEventListener("DOMContentLoaded", () => {
-  const main = document.querySelector("main");
   const header = document.getElementById("mainNav");
-  const heroSection = document.getElementById("hero");
   const sobreSection = document.getElementById("sobre");
 
   function toggleHeader() {
-  
     const sobreTop = sobreSection.getBoundingClientRect().top;
-    const mainTop = main.getBoundingClientRect().top;
 
-  
-    const relativeSobreTop = sobreTop - mainTop;
-
-  
-    if (relativeSobreTop > 0) {
+    if (sobreTop > 0) {
       header.classList.add("hidden");
     } else {
       header.classList.remove("hidden");
     }
   }
 
-
   toggleHeader();
 
-
-  main.addEventListener("scroll", toggleHeader);
+  window.addEventListener("scroll", toggleHeader);
 });
+
+
+
 
 
 // SCROLL DA PAGINA -------------------------------------
 document.addEventListener("DOMContentLoaded", () => {
-  const main = document.querySelector("main");
-  const header = document.getElementById("mainNav");
-  const firstSection = document.querySelector(".page.hero-section");
+  
+   const elements = document.querySelectorAll(
+    'section, article, div:not([class*="container"]), img, h1, h2, h3, h4, h5, h6, p, ul, li'
+  );
 
-  function toggleNavbar() {
-    const scrollTop = main.scrollTop;
-    if (firstSection) {
-      const limit = firstSection.offsetHeight / 2;
-      if (scrollTop < limit) {
-        header.classList.remove("hidden");
-      } else {
-        header.classList.add("hidden");
-      }
-    } else {
-      header.classList.remove("hidden");
-    }
-  }
-
-  toggleNavbar();
-  main.addEventListener("scroll", toggleNavbar);
-
-  const observerOptions = {
-    root: main,
-    rootMargin: "0px",
-    threshold: 0.5,
-  };
+  elements.forEach(el => el.classList.add('fade-in, .fade-in-header'));
 
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
+    entries.forEach(entry => {
       if (entry.isIntersecting) {
-        entry.target.classList.add("_visible");
+        entry.target.classList.add('visible');
+      } else {
+        entry.target.classList.remove('visible');
       }
     });
-  }, observerOptions);
+  }, {
+    threshold: 0.1
+  });
 
-  const sections = document.querySelectorAll(".page");
-  sections.forEach((section) => observer.observe(section));
+  elements.forEach(el => observer.observe(el));
+});
 
+document.addEventListener("DOMContentLoaded", () => {
+  const elements = document.querySelectorAll(
+    'section, article, div:not([class*="container"]), img, h1, h2, h3, h4, h5, h6, p, ul, li'
+  );
 
-  const isDesktop = !/Mobi|Android/i.test(navigator.userAgent);
+  elements.forEach(el => el.classList.add('fade-in'));
 
-  if (isDesktop) {
-    let isScrolling = false;
-
-    main.addEventListener('wheel', (e) => {
-      e.preventDefault();
-
-      if (isScrolling) return; 
-      isScrolling = true;
-
-      const delta = e.deltaY;
-
-    
-      const getRelativeTop = (element) => {
-        return element.getBoundingClientRect().top - main.getBoundingClientRect().top + main.scrollTop;
-      };
-
-      if (delta > 0) {
-      
-        const next = [...sections].find(section => getRelativeTop(section) > main.scrollTop + 10);
-        if (next) {
-          next.scrollIntoView({behavior: 'smooth'});
-        } else {
-          isScrolling = false;
-        }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
       } else {
-        
-        const prevSections = [...sections].filter(section => getRelativeTop(section) < main.scrollTop - 10);
-        if (prevSections.length) {
-          const prev = prevSections[prevSections.length - 1];
-          prev.scrollIntoView({behavior: 'smooth'});
-        } else {
-          isScrolling = false; 
-        }
+        entry.target.classList.remove('visible');
       }
+    });
+  }, {
+    threshold: 0.1
+  });
+
+  elements.forEach(el => observer.observe(el));
+});
+// ANIMAÇÃO DO FAQ ---------------------------------------------
+document.querySelectorAll('.faq-item h3').forEach(question => {
+  question.addEventListener('click', () => {
+    const faqItem = question.parentElement;
+    const isOpen = faqItem.classList.contains('open');
 
    
-      setTimeout(() => {
-        isScrolling = false;
-      }, 700);
-    }, {passive: false});
-  }
+    faqItem.classList.toggle('open', !isOpen);
+
+    
+    question.classList.toggle('active', !isOpen);
+  });
 });
+
+
 // COUNTER DO STAST -------------------------------------------- //
 const counters = document.querySelectorAll('.count-up');
   let hasCounted = false;
@@ -340,4 +283,54 @@ const counters = document.querySelectorAll('.count-up');
     observer.observe(statsSection);
   }
 
+
+// TESTIMONIAL -----------------------------------
+document.addEventListener("DOMContentLoaded", function() {
+  const items = document.querySelectorAll('.testimonial-item');
+  let current = 0;
+
+  function showItem(idx) {
+    items.forEach((el, i) => {
+      el.classList.toggle('active', i === idx);
+    });
+  }
+
+  function nextItem() {
+    current = (current + 1) % items.length;
+    showItem(current);
+  }
+
+  showItem(current);
+  setInterval(nextItem, 5000);
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+  const items = document.querySelectorAll('.testimonial-item');
+  let current = 0;
+
+
+  const indicatorsContainer = document.querySelector('.carousel-indicators');
+  items.forEach((_, idx) => {
+    const dot = document.createElement('span');
+    dot.classList.add('indicator');
+    if(idx === 0) dot.classList.add('active');
+    indicatorsContainer.appendChild(dot);
+  });
+  const indicators = document.querySelectorAll('.carousel-indicators .indicator');
+
+  function showItem(idx) {
+    items.forEach((el, i) => {
+      el.classList.toggle('active', i === idx);
+      indicators[i].classList.toggle('active', i === idx);
+    });
+  }
+
+  function nextItem() {
+    current = (current + 1) % items.length;
+    showItem(current);
+  }
+
+  showItem(current);
+  setInterval(nextItem, 5000);
+});
 
