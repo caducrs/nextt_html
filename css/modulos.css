@@ -1,0 +1,257 @@
+:root {
+  --primary-color: #e5f33c;
+  --secondary-color: #151606;
+  --white: #ffffff;
+  --transition: all 0.8s cubic-bezier(.23,1.01,.32,1);
+  --perspective: 1500px;
+}
+
+
+.modulos-main {
+  min-height: 100vh;
+  background: var(--secondary-color);
+  position: relative;
+  overflow: hidden;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: var(--perspective);
+  -webkit-overflow-scrolling: touch; 
+  touch-action: pan-y;
+}
+
+/* Container dos módulos */
+.modulos-container {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  touch-action: pan-y;
+}
+
+
+.modulo {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  box-sizing: border-box;
+  padding-left: 20px;
+  padding-right: 20px;
+  overflow: hidden;
+  display: flex;
+  background: var(--secondary-color);
+  opacity: 0;
+  pointer-events: none;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  will-change: opacity, transform;
+  z-index: 1;
+}
+
+
+.modulo.active {
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 2;
+  animation: fadeInCamera 1s cubic-bezier(.23,1.01,.32,1) forwards;
+}
+
+
+.modulo.exit-up {
+  animation: fadeOutCameraUp 1s cubic-bezier(.23,1.01,.32,1) forwards;
+  z-index: 1;
+}
+
+
+.modulo.exit-down {
+  animation: fadeOutCameraDown 1s cubic-bezier(.23,1.01,.32,1) forwards;
+  z-index: 1;
+}
+
+/* Animações keyframes */
+
+
+@keyframes fadeInCamera {
+  0% {
+    opacity: 0;
+    transform: translateZ(-300px) scale(0.85) translateY(80px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateZ(0) scale(1) translateY(0);
+  }
+}
+
+@keyframes fadeOutCameraUp {
+  0% {
+    opacity: 1;
+    transform: translateZ(0) scale(1) translateY(0) rotateX(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateZ(-600px) scale(0.7) translateY(-150px) rotateX(20deg);
+  }
+}
+
+
+@keyframes fadeOutCameraDown {
+  0% {
+    opacity: 1;
+    transform: translateZ(0) scale(1) translateY(0) rotateX(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateZ(-600px) scale(0.7) translateY(150px) rotateX(-20deg);
+  }
+}
+
+
+.modulo-left {
+  flex: 1 1 40%;
+  padding-left: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: var(--white);
+  box-sizing: border-box;
+  user-select: none;
+}
+
+.modulo-separator {
+  display: none; 
+}
+
+.modulo-title {
+  color: var(--primary-color);
+  font-family: "Montserrat", sans-serif;
+  font-weight: 900;
+  font-size: 2.8rem;
+  margin: 0 0 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.modulo-subtitle {
+  color: var(--white);
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 1.6rem;
+  margin: 0 0 24px;
+}
+
+.modulo-list,
+.modulo-desc {
+  color: var(--white);
+  font-weight: 500;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  margin: 0;
+  padding-left: 1.3em;
+}
+
+.modulo-list li {
+  margin-bottom: 12px;
+}
+
+
+.modulo-right {
+  flex: 1 1 60%;
+  background-image: var(--bg-image);
+  background-size: cover;      
+  background-position: center center;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100vh;                
+  overflow: hidden;
+  backface-visibility: hidden;
+  transition: transform 1s cubic-bezier(.23,1.01,.32,1);
+}
+
+
+.modulos-back-button-wrapper {
+  position: fixed;
+  bottom: 32px;
+  left: 32px;
+  z-index: 9999;
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  outline: none;
+}
+
+
+.modulos-back-button {
+  background: none;
+  border: none;
+  color: var(--primary-color);
+  font-size: 2.4rem;
+  line-height: 1;
+  padding: 0;
+  font-weight: 900;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  transition: color 0.3s ease;
+}
+
+
+.modulos-back-button::before {
+  content: "←";
+  display: inline-block;
+}
+
+
+.tooltip {
+  background: var(--primary-color);
+  color: var(--secondary-color);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  user-select: none;
+  z-index: 10000;
+  pointer-events: none;
+
+
+  position: relative;
+  transform: translateX(-10px);
+}
+
+
+.modulos-back-button-wrapper:hover .tooltip,
+.modulos-back-button-wrapper:focus-within .tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+}
+
+/* Responsividade*/
+@media (max-width: 900px) {
+  .modulo {
+    flex-direction: column;
+    padding: 20px 15px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .modulo-left {
+    padding-left: 0;
+    width: 100%;
+    text-align: center;
+  }
+  .modulo-right {
+    flex: none;
+    width: 100%;
+    height: 300px; 
+    background-size: cover;
+  }
+  .modulos-back-button-wrapper {
+    bottom: 16px;
+    left: 16px;
+  }
+}
