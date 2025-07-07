@@ -23,7 +23,7 @@ body {
   font-size: 16px;
   line-height: 1.6;
   color: var(--dark-gray);
-  background: (--secondary-color);
+  background-color: var(--white);
   scrollbar-width: thin;
   scrollbar-color: var(--primary-color) var(--secondary-color);
 }
@@ -49,6 +49,7 @@ body {
 }
 
 .fade-in {
+
   opacity: 0;
   transform: translateY(24px);
   transition: opacity 0.8s cubic-bezier(0.23, 1.01, 0.32, 1),
@@ -416,6 +417,7 @@ img {
 }
 
 .bg-image-hero {
+  background-color: var(--secondary-color);
   position: absolute;
   top: 0;
   left: 0;
@@ -2150,6 +2152,7 @@ textarea.form-control {
 
   .hero-title {
     font-size: 3rem;
+     background-color: var(--secondary-color);
   }
 
   .about-grid,
