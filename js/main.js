@@ -180,49 +180,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // SCROLL DA PAGINA -------------------------------------
 document.addEventListener("DOMContentLoaded", () => {
-  
-   const elements = document.querySelectorAll(
-    'section, article, div:not([class*="container"]), img, h1, h2, h3, h4, h5, h6, p, ul, li'
-  );
-
-  elements.forEach(el => el.classList.add('fade-in, .fade-in-header'));
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      } else {
-        entry.target.classList.remove('visible');
-      }
-    });
-  }, {
-    threshold: 0.1
-  });
-
-  elements.forEach(el => observer.observe(el));
-});
-
-document.addEventListener("DOMContentLoaded", () => {
   const elements = document.querySelectorAll(
-    'section, article, div:not([class*="container"]), img, h1, h2, h3, h4, h5, h6, p, ul, li'
+    'section, article, img, h1, h2, h3, h4, h5, h6, p, ul, li, .animate-on-scroll'
   );
 
-  elements.forEach(el => el.classList.add('fade-in'));
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      } else {
-        entry.target.classList.remove('visible');
-      }
-    });
-  }, {
-    threshold: 0.1
+  elements.forEach(el => {
+    el.classList.add('fade-in');
   });
+
+  const observer = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    {
+      threshold: 0.1,
+      rootMargin: "0px 0px -100px 0px" 
+    }
+  );
 
   elements.forEach(el => observer.observe(el));
 });
+
 // ANIMAÇÃO DO FAQ ---------------------------------------------
 document.querySelectorAll('.faq-item h3').forEach(question => {
   question.addEventListener('click', () => {

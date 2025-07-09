@@ -26,6 +26,7 @@ body {
   background-color: var(--white);
   scrollbar-width: thin;
   scrollbar-color: var(--primary-color) var(--secondary-color);
+   -webkit-overflow-scrolling: touch;
 }
 
 .section-dark {
@@ -90,7 +91,7 @@ main {
   overflow: hidden;
   scroll-behavior: smooth;
   scroll-behavior: auto;
-  -webkit-overflow-scrolling: touch;
+ 
 }
 
 .page {

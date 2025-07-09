@@ -7,39 +7,27 @@
 }
 
 
-.modulos-main {
-  min-height: 100vh;
-  background: var(--secondary-color);
-  position: relative;
-  overflow: hidden;
-  width: 100vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  perspective: var(--perspective);
-  -webkit-overflow-scrolling: touch; 
-  touch-action: pan-y;
-}
-
-/* Container dos módulos */
+.modulos-main,
 .modulos-container {
   width: 100vw;
   height: 100vh;
-  position: relative;
   overflow: hidden;
-  touch-action: pan-y;
+  touch-action: none;
+  position: relative;
+  background: var(--secondary-color);
+  perspective: var(--perspective);
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 
 .modulo {
   position: absolute;
-  top: 0; left: 0;
-  width: 100vw;
-  height: 100vh;
+  inset: 0;
   box-sizing: border-box;
-  padding-left: 20px;
-  padding-right: 20px;
-  overflow: hidden;
+  padding: 0 20px;
   display: flex;
   background: var(--secondary-color);
   opacity: 0;
@@ -48,8 +36,12 @@
   backface-visibility: hidden;
   will-change: opacity, transform;
   z-index: 1;
+  transition: opacity 1s cubic-bezier(.23,1.01,.32,1);
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
 }
-
 
 .modulo.active {
   opacity: 1;
@@ -58,19 +50,22 @@
   animation: fadeInCamera 1s cubic-bezier(.23,1.01,.32,1) forwards;
 }
 
+.modulo.exit-up,
+.modulo.exit-down {
+  z-index: 1;
+  animation-duration: 1s;
+  animation-timing-function: cubic-bezier(.23,1.01,.32,1);
+  animation-fill-mode: forwards;
+  will-change: opacity, transform;
+}
 
 .modulo.exit-up {
-  animation: fadeOutCameraUp 1s cubic-bezier(.23,1.01,.32,1) forwards;
-  z-index: 1;
+  animation-name: fadeOutCameraUp;
 }
-
 
 .modulo.exit-down {
-  animation: fadeOutCameraDown 1s cubic-bezier(.23,1.01,.32,1) forwards;
-  z-index: 1;
+  animation-name: fadeOutCameraDown;
 }
-
-/* Animações keyframes */
 
 
 @keyframes fadeInCamera {
@@ -95,7 +90,6 @@
   }
 }
 
-
 @keyframes fadeOutCameraDown {
   0% {
     opacity: 1;
@@ -109,64 +103,59 @@
 
 
 .modulo-left {
-  flex: 1 1 40%;
-  padding-left: 24px;
+  flex: none;
+  width: 100%;
+  max-width: 700px;
+  padding: 0 24px;
+  color: var(--white);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  color: var(--white);
-  box-sizing: border-box;
+  align-items: center;
   user-select: none;
+  text-align: center;
 }
 
-.modulo-separator {
-  display: none; 
+.modulo-title,
+.modulo-subtitle,
+.modulo-list,
+.modulo-desc {
+  margin: 0;
+  color: var(--white);
+  font-family: "Montserrat", sans-serif;
 }
 
 .modulo-title {
   color: var(--primary-color);
-  font-family: "Montserrat", sans-serif;
   font-weight: 900;
   font-size: 2.8rem;
-  margin: 0 0 12px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  margin-bottom: 12px;
 }
 
 .modulo-subtitle {
-  color: var(--white);
-  font-family: "Montserrat", sans-serif;
   font-weight: 700;
   font-size: 1.6rem;
-  margin: 0 0 24px;
+  margin-bottom: 24px;
 }
 
 .modulo-list,
 .modulo-desc {
-  color: var(--white);
   font-weight: 500;
   font-size: 1.1rem;
   line-height: 1.5;
-  margin: 0;
   padding-left: 1.3em;
+  text-align: left;
+  max-width: 600px;
 }
 
 .modulo-list li {
   margin-bottom: 12px;
 }
 
-
-.modulo-right {
-  flex: 1 1 60%;
-  background-image: var(--bg-image);
-  background-size: cover;      
-  background-position: center center;
-  background-repeat: no-repeat;
-  width: 100%;
-  height: 100vh;                
-  overflow: hidden;
-  backface-visibility: hidden;
-  transition: transform 1s cubic-bezier(.23,1.01,.32,1);
+.modulo-separator {
+  display: none;
 }
 
 
@@ -183,27 +172,25 @@
   outline: none;
 }
 
-
 .modulos-back-button {
   background: none;
   border: none;
   color: var(--primary-color);
   font-size: 2.4rem;
-  line-height: 1;
-  padding: 0;
   font-weight: 900;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1;
+  padding: 0;
   transition: color 0.3s ease;
 }
-
 
 .modulos-back-button::before {
   content: "←";
   display: inline-block;
 }
 
-
 .tooltip {
+  position: relative;
   background: var(--primary-color);
   color: var(--secondary-color);
   padding: 6px 12px;
@@ -213,16 +200,12 @@
   white-space: nowrap;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
   user-select: none;
   z-index: 10000;
-  pointer-events: none;
-
-
-  position: relative;
+  transition: opacity 0.3s ease, transform 0.3s ease;
   transform: translateX(-10px);
 }
-
 
 .modulos-back-button-wrapper:hover .tooltip,
 .modulos-back-button-wrapper:focus-within .tooltip {
@@ -231,25 +214,15 @@
   transform: translateX(0);
 }
 
-/* Responsividade*/
+
 @media (max-width: 900px) {
-  .modulo {
-    flex-direction: column;
-    padding: 20px 15px;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-  }
   .modulo-left {
-    padding-left: 0;
     width: 100%;
+    max-width: none;
+    padding: 20px 15px;
     text-align: center;
   }
-  .modulo-right {
-    flex: none;
-    width: 100%;
-    height: 300px; 
-    background-size: cover;
-  }
+
   .modulos-back-button-wrapper {
     bottom: 16px;
     left: 16px;
