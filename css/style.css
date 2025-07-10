@@ -1584,10 +1584,11 @@ img {
 }
 
 .about-image {
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  width: 180%;               
+  border-radius: 50%;
+         
 }
+
 
 .mission-vision-values {
   padding: 100px 0;
