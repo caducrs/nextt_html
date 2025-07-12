@@ -46,8 +46,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-
-
   // Initialize portfolio filters if exists and Isotope is loaded
   const portfolioGrid = document.querySelector(".portfolio-grid");
   const portfolioFilters = document.querySelectorAll(".portfolio-filter");
@@ -82,46 +80,96 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Contact form validation
   const contactForm = document.getElementById("contactForm");
+
+  function isValidEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+
+  function sanitizeInput(str) {
+    return str.replace(/[&<>"'`=\/]/g, function (s) {
+      return (
+        {
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#39;",
+          "`": "&#x60;",
+          "=": "&#x3D;",
+          "/": "&#x2F;",
+        }[s] || s
+      );
+    });
+  }
+
+  function showError(input, message) {
+    input.classList.add("error");
+
+    let errorElem = input.nextElementSibling;
+    if (!errorElem || !errorElem.classList.contains("error-message")) {
+      errorElem = document.createElement("small");
+      errorElem.classList.add("error-message");
+      input.parentNode.insertBefore(errorElem, input.nextSibling);
+    }
+    errorElem.textContent = message;
+  }
+
+  function clearError(input) {
+    input.classList.remove("error");
+    const errorElem = input.parentNode.querySelector(".error-message");
+    if (errorElem) {
+      errorElem.remove();
+    }
+  }
+
   if (contactForm) {
     contactForm.addEventListener("submit", function (e) {
       e.preventDefault();
 
       let valid = true;
+
       const name = document.getElementById("name");
       const email = document.getElementById("email");
       const message = document.getElementById("message");
 
-      // Validate name
+      clearError(name);
+      clearError(email);
+      clearError(message);
+
       if (!name.value.trim()) {
-        name.classList.add("error");
+        showError(name, "Por favor, preencha seu nome.");
         valid = false;
       } else {
-        name.classList.remove("error");
+        name.value = sanitizeInput(name.value.trim());
       }
 
-      // Validate email
-      if (!email.value.trim() || !isValidEmail(email.value)) {
-        email.classList.add("error");
+      if (!email.value.trim() || !isValidEmail(email.value.trim())) {
+        showError(email, "Por favor, informe um email válido.");
         valid = false;
       } else {
-        email.classList.remove("error");
+        email.value = sanitizeInput(email.value.trim());
       }
 
-      // Validate message
       if (!message.value.trim()) {
-        message.classList.add("error");
+        showError(message, "Por favor, escreva uma mensagem.");
         valid = false;
       } else {
-        message.classList.remove("error");
+        message.value = sanitizeInput(message.value.trim());
       }
 
       if (valid) {
-        // Here would be the actual form submission
-        // For now, just show a success message
-        alert("Mensagem enviada com sucesso! (Simulação)");
-        contactForm.reset();
-      } else {
-        alert("Por favor, preencha todos os campos obrigatórios corretamente.");
+        emailjs.sendForm("service_c3ob8qi", "template_46kquol", this).then(
+          function () {
+            alert("✅ Mensagem enviada com sucesso! Obrigado pelo contato.");
+            contactForm.reset();
+          },
+          function (error) {
+            alert(
+              "❌ Ocorreu um erro ao enviar a mensagem. Tente novamente mais tarde."
+            );
+            console.error("Erro EmailJS:", error);
+          }
+        );
       }
     });
   }
@@ -131,9 +179,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return pattern.test(email);
   }
-
-
-
 
   // Animation on scroll
   function animateOnScroll() {
@@ -152,7 +197,6 @@ document.addEventListener("DOMContentLoaded", function () {
   window.addEventListener("scroll", animateOnScroll);
   window.addEventListener("load", animateOnScroll);
 });
-
 
 // --------- Função de visibilidade do header ---------------
 document.addEventListener("DOMContentLoaded", () => {
@@ -174,107 +218,102 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("scroll", toggleHeader);
 });
 
-
-
-
-
 // SCROLL DA PAGINA -------------------------------------
 document.addEventListener("DOMContentLoaded", () => {
   const elements = document.querySelectorAll(
-    'section, article, img, h1, h2, h3, h4, h5, h6, p, ul, li, .animate-on-scroll'
+    "section, article, img, h1, h2, h3, h4, h5, h6, p, ul, li, .animate-on-scroll"
   );
 
-  elements.forEach(el => {
-    el.classList.add('fade-in');
+  elements.forEach((el) => {
+    el.classList.add("fade-in");
   });
 
   const observer = new IntersectionObserver(
-    entries => {
-      entries.forEach(entry => {
+    (entries) => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
+          entry.target.classList.add("visible");
           observer.unobserve(entry.target);
         }
       });
     },
     {
       threshold: 0.1,
-      rootMargin: "0px 0px -100px 0px" 
+      rootMargin: "0px 0px -100px 0px",
     }
   );
 
-  elements.forEach(el => observer.observe(el));
+  elements.forEach((el) => observer.observe(el));
 });
 
 // ANIMAÇÃO DO FAQ ---------------------------------------------
-document.querySelectorAll('.faq-item h3').forEach(question => {
-  question.addEventListener('click', () => {
+document.querySelectorAll(".faq-item h3").forEach((question) => {
+  question.addEventListener("click", () => {
     const faqItem = question.parentElement;
-    const isOpen = faqItem.classList.contains('open');
+    const isOpen = faqItem.classList.contains("open");
 
-   
-    faqItem.classList.toggle('open', !isOpen);
+    faqItem.classList.toggle("open", !isOpen);
 
-    
-    question.classList.toggle('active', !isOpen);
+    question.classList.toggle("active", !isOpen);
   });
 });
 
-
 // COUNTER DO STAST -------------------------------------------- //
-const counters = document.querySelectorAll('.count-up');
-  let hasCounted = false;
+const counters = document.querySelectorAll(".count-up");
+let hasCounted = false;
 
-  const animateCount = (el, target) => {
-    let start = 0;
-    const duration = 9000; 
-    const increment = Math.ceil(target / (duration / 16)); // ~60fps
+const animateCount = (el, target) => {
+  let start = 0;
+  const duration = 9000;
+  const increment = Math.ceil(target / (duration / 16)); // ~60fps
 
-    const updateCount = () => {
-      start += increment;
-      if (start >= target) {
-        el.textContent = target;
-      } else {
-        el.textContent = start;
-        requestAnimationFrame(updateCount);
-      }
-    };
-
-    updateCount();
+  const updateCount = () => {
+    start += increment;
+    if (start >= target) {
+      el.textContent = target;
+    } else {
+      el.textContent = start;
+      requestAnimationFrame(updateCount);
+    }
   };
 
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
+  updateCount();
+};
+
+const observer = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
       if (entry.isIntersecting && !hasCounted) {
         hasCounted = true;
 
-        counters.forEach(counter => {
-          const span = counter.querySelector('span');
+        counters.forEach((counter) => {
+          const span = counter.querySelector("span");
           const target = parseInt(counter.dataset.target, 10);
           animateCount(span, target);
         });
 
-        observer.disconnect(); 
+        observer.disconnect();
       }
     });
-  }, {
-    threshold: 0.6
-  });
-
-  const statsSection = document.querySelector('.stats-section');
-  if (statsSection) {
-    observer.observe(statsSection);
+  },
+  {
+    threshold: 0.6,
   }
+);
 
+const statsSection = document.querySelector(".stats-section");
+if (statsSection) {
+  observer.observe(statsSection);
+}
 
 // TESTIMONIAL -----------------------------------
-document.addEventListener("DOMContentLoaded", function() {
-  const items = document.querySelectorAll('.testimonial-item');
+document.addEventListener("DOMContentLoaded", function () {
+  const items = document.querySelectorAll(".testimonial-item");
   let current = 0;
 
   function showItem(idx) {
     items.forEach((el, i) => {
-      el.classList.toggle('active', i === idx);
+      el.classList.toggle("active", i === idx);
     });
   }
 
@@ -287,24 +326,25 @@ document.addEventListener("DOMContentLoaded", function() {
   setInterval(nextItem, 5000);
 });
 
-document.addEventListener("DOMContentLoaded", function() {
-  const items = document.querySelectorAll('.testimonial-item');
+document.addEventListener("DOMContentLoaded", function () {
+  const items = document.querySelectorAll(".testimonial-item");
   let current = 0;
 
-
-  const indicatorsContainer = document.querySelector('.carousel-indicators');
+  const indicatorsContainer = document.querySelector(".carousel-indicators");
   items.forEach((_, idx) => {
-    const dot = document.createElement('span');
-    dot.classList.add('indicator');
-    if(idx === 0) dot.classList.add('active');
+    const dot = document.createElement("span");
+    dot.classList.add("indicator");
+    if (idx === 0) dot.classList.add("active");
     indicatorsContainer.appendChild(dot);
   });
-  const indicators = document.querySelectorAll('.carousel-indicators .indicator');
+  const indicators = document.querySelectorAll(
+    ".carousel-indicators .indicator"
+  );
 
   function showItem(idx) {
     items.forEach((el, i) => {
-      el.classList.toggle('active', i === idx);
-      indicators[i].classList.toggle('active', i === idx);
+      el.classList.toggle("active", i === idx);
+      indicators[i].classList.toggle("active", i === idx);
     });
   }
 
@@ -316,4 +356,3 @@ document.addEventListener("DOMContentLoaded", function() {
   showItem(current);
   setInterval(nextItem, 5000);
 });
-
